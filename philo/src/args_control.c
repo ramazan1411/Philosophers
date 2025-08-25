@@ -1,4 +1,16 @@
-#include "philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_control.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raktas <raktas@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 18:03:47 by raktas            #+#    #+#             */
+/*   Updated: 2025/08/24 14:12:18 by raktas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../philo.h"
 
 int	ft_atoi(const char *str)
 {
@@ -38,7 +50,6 @@ int	validate_args(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error: Wrong number of arguments\n");
-		printf("Usage: ./philo nb_philo time_die time_eat time_sleep [must_eat]\n");
 		return (0);
 	}
 	i = 1;
@@ -65,28 +76,4 @@ int	parse_args(char **argv, t_data *data)
 	else
 		data->must_eat_count = -1;
 	return (1);
-}
-
-int	main(int argc, char **argv)
-{
-	t_data	data;
-	t_philo	*philos;
-
-	if (!validate_args(argc, argv))
-		return (1);
-	if (!parse_args(argv, &data))
-		return (1);
-	if (!init_data(&data))
-		return (1);
-	philos = allocate_philos(&data);
-	if (!philos)
-		return (1);
-	init_philosophers(&data, philos);
-	if (!create_threads(&data, philos))
-		return (1);
-	monitor_philos(&data, philos);
-	join_threads(&data, philos);
-	cleanup_mutexes(&data);
-	free(philos);
-	return (0);
 }

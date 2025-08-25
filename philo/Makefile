@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 RM = rm -f
 
-SOURCES = main.c src/utils.c src/init.c src/philo.c src/monitor.c
+SOURCES = main.c src/args_control.c src/utils.c src/init.c src/philosopher/philo.c src/philosopher/philo_utils.c src/monitor.c
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raktas <raktas@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 17:59:21 by raktas            #+#    #+#             */
+/*   Updated: 2025/08/25 17:50:37 by raktas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 void	announce_death(t_philo *philo)
@@ -29,7 +41,7 @@ int	check_all_deaths(t_data *data, t_philo *philos)
 
 void	monitor_philos(t_data *data, t_philo *philos)
 {
-	while (!is_dead(data))
+	while (!dead_flag_control(data))
 	{
 		if (check_all_deaths(data, philos))
 			break ;
@@ -40,7 +52,7 @@ void	monitor_philos(t_data *data, t_philo *philos)
 			pthread_mutex_unlock(&data->death_mutex);
 			break ;
 		}
-		usleep(1000);
+		usleep(100);
 	}
 }
 
@@ -51,7 +63,7 @@ int	create_threads(t_data *data, t_philo *philos)
 	i = 0;
 	while (i < data->philo_count)
 	{
-		if (pthread_create(&philos[i].thread, NULL, 
+		if (pthread_create(&philos[i].thread, NULL,
 				philosopher_routine, &philos[i]) != 0)
 			return (0);
 		i++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raktas <raktas@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 17:59:17 by raktas            #+#    #+#             */
+/*   Updated: 2025/08/25 13:59:04 by raktas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 int	init_mutexes(t_data *data)
@@ -37,8 +49,25 @@ void	init_philosophers(t_data *data, t_philo *philos)
 			philos[i].right_fork = &data->forks[0];
 		else
 			philos[i].right_fork = &data->forks[i + 1];
+		pthread_mutex_init(&philos[i].meal_mutex, NULL);
 		i++;
 	}
+}
+
+void	cleanup_mutexes(t_data *data, t_philo *philos)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&philos[i].meal_mutex);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->death_mutex);
+	free(data->forks);
 }
 
 int	init_data(t_data *data)
@@ -48,21 +77,6 @@ int	init_data(t_data *data)
 	if (!init_mutexes(data))
 		return (0);
 	return (1);
-}
-
-void	cleanup_mutexes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philo_count)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->death_mutex);
-	free(data->forks);
 }
 
 t_philo	*allocate_philos(t_data *data)
