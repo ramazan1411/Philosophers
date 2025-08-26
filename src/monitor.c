@@ -6,7 +6,7 @@
 /*   By: raktas <raktas@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:59:21 by raktas            #+#    #+#             */
-/*   Updated: 2025/08/25 17:50:37 by raktas           ###   ########.fr       */
+/*   Updated: 2025/08/26 11:48:56 by raktas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	monitor_philos(t_data *data, t_philo *philos)
 			pthread_mutex_unlock(&data->death_mutex);
 			break ;
 		}
-		usleep(100);
+		usleep(1000);
 	}
 }
 

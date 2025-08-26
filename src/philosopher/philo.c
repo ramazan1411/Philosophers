@@ -6,7 +6,7 @@
 /*   By: raktas <raktas@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:59:29 by raktas            #+#    #+#             */
-/*   Updated: 2025/08/25 19:00:46 by raktas           ###   ########.fr       */
+/*   Updated: 2025/08/26 11:55:25 by raktas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(200);
+		ft_usleep(philo->data->time_to_eat / 2);
 	while (!dead_flag_control(philo->data))
 	{
 		philo_eat(philo);
